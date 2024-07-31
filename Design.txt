@@ -1,0 +1,26 @@
+
+Top-Level Ideas and Design Considerations...
+
+- Build this whole thing from scratch so that I know the supply chain
+  is not compromised!
+
+- Still need to trust the C compiler and libraries used.
+  - Think of a clever way to verify that none of that is invalid.
+    - E.g., When code compiles, always compare compiler and all dependencies
+      to currently used versions and hashes.
+    - Manually update the hashes when updating the local supply chain components.
+    - And remember, all this is useless if the operating system, or layers
+      beneath the application are compromised.
+
+- In addition, there could be network compromise,
+  but if everything is done right, that would depend on breaking the encryption.
+  - Need to protect against quantum.
+
+===
+
+Usage Ideas (these will evolve as I build this out...)
+
+server: rt -s ip port
+client: rt -c ip port
+
+In both cases, ctrl+c should terminate the program and all related connections.
