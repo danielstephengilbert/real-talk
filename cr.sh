@@ -5,7 +5,7 @@
 
 set -x
 
-gcc rt.c -o rt
+gcc ./src/rt.c -o rt
 ./rt
 ./rt -s 127.0.0.1 7001
 ./rt -c 127.0.0.1 7001

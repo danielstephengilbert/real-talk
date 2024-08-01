@@ -5,5 +5,5 @@
 
 set -x
 
-gcc rt.c -o rt
+gcc ./src/rt.c -o rt
 
