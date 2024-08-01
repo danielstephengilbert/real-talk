@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/help/print_usage.h"
-#include "../include/regex/compile_regex.h"
-#include "../include/regex/execute_regex.h"
-#include "../include/regex/validate_regex.h"
 #include "../include/validation/validate_arg_count.h"
 #include "../include/validation/validate_ip.h"
 #include "../include/validation/validate_mode.h"
