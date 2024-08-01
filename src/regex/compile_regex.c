@@ -1,4 +1,3 @@
-
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,4 +16,3 @@ regex_t compile_regex(char *raw_regex) {
   return compiled_regex;
 
 }
-

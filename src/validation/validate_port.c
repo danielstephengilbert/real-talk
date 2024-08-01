@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,4 +18,3 @@ void validate_port(char *port) {
   }
 
 }
-

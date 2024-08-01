@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 
 void print_usage() {
@@ -8,4 +7,3 @@ void print_usage() {
   printf("client: rt -c server_ip server_port\n\n");
 
 }
-

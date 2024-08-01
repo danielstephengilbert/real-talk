@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 set -x
@@ -14,4 +13,3 @@ gcc \
   ./src/validation/validate_mode.c \
   ./src/validation/validate_port.c \
   -o rt
-

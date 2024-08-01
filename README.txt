@@ -1,4 +1,3 @@
-
 Project: rt (real-talk)
 
 Author: Daniel Gilbert
@@ -18,4 +17,3 @@ Pupose of Project:
 - To provide a secure means of peer-to-peer, end-to-end encryption,
   with zero intermediary servers,
   relying solely on the existing network infrastructure.
-

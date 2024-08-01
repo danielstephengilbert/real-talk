@@ -1,4 +1,3 @@
-
 Top-Level Ideas and Design Considerations...
 
 - Build this whole thing from scratch so that I know the supply chain
@@ -24,4 +23,3 @@ server: rt -s ip port
 client: rt -c ip port
 
 In both cases, ctrl+c should terminate the program and all related connections.
-

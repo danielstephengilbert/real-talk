@@ -1,4 +1,3 @@
-
 #include <regex.h>
 
 #include "../../include/regex/compile_regex.h"
@@ -16,4 +15,3 @@ int validate_regex(char *raw_regex, char *pattern) {
   }
 
 }
-

@@ -1,4 +1,3 @@
-
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,4 +16,3 @@ int execute_regex(regex_t compiled_regex, char *pattern) {
   }
 
 }
-
