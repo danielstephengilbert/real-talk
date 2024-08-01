@@ -1,8 +1,3 @@
-#include <regex.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../include/validation/validate_arg_count.h"
 #include "../include/validation/validate_ip.h"
 #include "../include/validation/validate_mode.h"
