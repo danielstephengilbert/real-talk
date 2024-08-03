@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void print_usage() {
+void print_usage(void) {
 
   printf("\nUsage:\n");
   printf("server: rt -s server_ip server_port\n");
