@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../include/help.h"
-#include "../../include/regex.h"
+#include "../include/help.h"
+#include "../include/regex.h"
 
 void validate_arg_count(int argc) {
 
