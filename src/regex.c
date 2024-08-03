@@ -9,7 +9,7 @@ regex_t compile_regex(char *raw_regex) {
   int regex_status = regcomp(&compiled_regex, raw_regex, REG_EXTENDED);
   
   if (regex_status != 0) {
-    printf("\nRegex failed to compile.\n");
+    fprintf(stderr, "\nRegex failed to compile.\n");
     exit(1);
   }
 
@@ -26,7 +26,7 @@ int execute_regex(regex_t compiled_regex, char *pattern) {
   } else if (regex_status == REG_NOMATCH) {
     return 0;
   } else {
-    printf("\nError processing regex.\n");
+    fprintf(stderr, "\nError processing regex.\n");
     exit(1);
   }
 

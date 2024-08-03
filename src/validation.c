@@ -7,6 +7,7 @@
 void validate_arg_count(int argc) {
 
   if (argc != 4) {
+    fprintf(stderr, "\nYou must supply exactly 3 arguments.\n");
     print_usage();
     exit(1);
   }
@@ -21,7 +22,7 @@ void validate_ip(char *ip) {
   int valid_ip = validate_regex(ip_regex, ip);
   
   if (!valid_ip) {
-    printf("\nYou must specify a valid IP address format: XXX.XXX.XXX.XXX.\n");
+    fprintf(stderr, "\nYou must specify a valid IP address format: XXX.XXX.XXX.XXX.\n");
     print_usage();
     exit(1);
   }
@@ -35,7 +36,7 @@ void validate_mode(char *mode) {
   int valid_mode = validate_regex(mode_regex, mode);
   
   if (!valid_mode) {
-    printf("\nYou must specify either server -s or client -c mode.\n");
+    fprintf(stderr, "\nYou must specify either server -s or client -c mode.\n");
     print_usage();
     exit(1);
   }
@@ -50,7 +51,7 @@ void validate_port(char *port) {
   int valid_port = validate_regex(port_regex, port);
   
   if (!valid_port) {
-    printf("\nYou must specify a valid port format: XXXXX.\n");
+    fprintf(stderr, "\nYou must specify a valid port format: XXXXX.\n");
     print_usage();
     exit(1);
   }
