@@ -1,7 +1,4 @@
-#include "../include/validation/validate_arg_count.h"
-#include "../include/validation/validate_ip.h"
-#include "../include/validation/validate_mode.h"
-#include "../include/validation/validate_port.h"
+#include "../include/validation.h"
 
 int main(int argc, char *argv[]) {
 
