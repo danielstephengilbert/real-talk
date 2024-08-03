@@ -35,6 +35,13 @@ host (server):  > ./rt
                 > but if those fail, they will be automatically blocked,
                 > and you will have to unblock them. You will be notified.
 
+                (Include geolocation/IP ownership info in notifications
+                if I can pull that info without relying too much on a
+                third-party or sending unwanted telemetry to those
+                services. Maybe keep a cached copy of all the relevant
+                geo/IP info so that queries aren't constantly being made,
+                and the user can manually update the cache only if they desire.)
+
                 (I'm trying to make this program as simple as possible to use
                 for non-technical people.)
 
@@ -62,18 +69,10 @@ client:         > ./rt remote_public_ip port
 
                 > Password: (types password, then presses enter)
 
-                (Upon 3 invalid password attempts, disconnect user.
-                If the server logs show more than one instance of this
-                from the same IP address,
-                notify the host server admin with the relevant IP
-                and geolocation info.
-                If the same IP fails 6 times (two connections), automatically
-                block the IP address until/unless the host server admin
-                unblocks it.)
-
                 "Hey, what's up?"
 
 host (server):  "Alright, talk to you later."
+
                 (ctrl+c, disconnects self and all connected clients)
 
 ---
