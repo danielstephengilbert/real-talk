@@ -6,8 +6,13 @@
 
 void validate_arg_count(int argc) {
 
-  if (argc != 4) {
-    fprintf(stderr, "\nYou must supply exactly 3 arguments.\n");
+  // The name of the program is passed as the first argument
+  // and is not user-supplied
+  int real_arg_count = argc - 1;
+
+  if (real_arg_count != 0 && real_arg_count != 2) {
+    fprintf(stderr, "\nYou must supply either 0 or 2 arguments,\n");
+    fprintf(stderr, "depending on the mode.\nSee usage.\n");
     print_usage();
     exit(1);
   }

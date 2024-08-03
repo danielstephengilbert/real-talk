@@ -3,7 +3,7 @@
 void print_usage(void) {
 
   printf("\nUsage:\n");
-  printf("server: rt -s server_ip server_port\n");
-  printf("client: rt -c server_ip server_port\n\n");
+  printf("server: ./rt\n");
+  printf("client: ./rt server_ip server_port\n\n");
 
 }
