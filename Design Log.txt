@@ -36,7 +36,7 @@ Practical usage....
 > rt -s local_ip port
 rt server started on local_ip:port.
 Your public IP address is: XXX.XXX.XXX.XXX.
-Using default address (1.1.1.1) hop metrics to bypass NAT.
+Using default address (X.X.X.X) hop metrics to bypass NAT.
 
 Note: I just tested pwnat
       (https://github.com/samyk/pwnat)
