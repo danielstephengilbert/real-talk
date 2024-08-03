@@ -14,6 +14,8 @@ License:
 
 Pupose of Project:
 
-- To provide a secure means of peer-to-peer, end-to-end encrypted messaging
+- To provide a secure means of
+  peer-to-peer, end-to-end encrypted
+  messaging
   with zero intermediary servers,
   relying solely on the existing network infrastructure.

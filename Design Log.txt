@@ -1,0 +1,95 @@
+
+2024-08-03
+
+Will slow down and take things one step at a time.
+I don't even have a chat client yet.
+Get that working on my machine and the local network,
+then worry about NAT, etc.
+
+I just ordered a couple of books on Unix Network Programming
+by W. Richard Stevens.
+They look very thorough, and will be a nice deeper dive
+than what I've been following with
+Beej's Guide to Network Programming
+(https://beej.us/guide/bgnet/html/)
+which is helpful, but leaves me wanting more explanations.
+
+I also starred the source for UnreadIRCd
+(https://github.com/unrealircd/unrealircd)
+in case that comes in handy,
+since what I'm going for is very similar to IRC.
+
+I'm gonna play with the code from Beej
+in a separate offline project
+just to familiarize myself with the concepts,
+and modify the code to suit my preferences.
+
+Will start adding the network code to this project
+once I have a better handle on that.
+
+===
+
+2024-08-02
+
+Practical usage....
+
+> rt -s local_ip port
+rt server started on local_ip:port.
+Your public IP address is: XXX.XXX.XXX.XXX.
+Using default address (1.1.1.1) hop metrics to bypass NAT.
+
+Note: I just tested pwnat
+      (https://github.com/samyk/pwnat)
+      that leverages udptunnel by Daniel Meekins
+      (https://code.google.com/archive/p/udptunnel/)
+      to test NAT traversal in advance of using it in this project.
+      Unfortunately, it did not work as expected.
+
+      Not sure if the technique is being blocked in my setup,
+      or if the tool needs to be updated.
+
+      In either case,
+      I'd prefer to leverage the underlying concepts
+      to build my own implementation if it's still feasible.
+
+===
+
+2024-07-30
+
+Top-Level Ideas and Design Considerations...
+
+- Build this whole thing from scratch
+  so that I know the supply chain
+  is not compromised!
+
+- Still need to trust
+  the C compiler and libraries used.
+  - Think of a clever way to
+    verify that none of that is invalid.
+    - E.g., When code compiles,
+      always compare compiler and all dependencies
+      to currently used versions and hashes.
+    - Manually update the hashes
+      when updating the local supply chain components.
+    - And remember,
+      all this is useless
+      if the operating system,
+      or layers beneath the application
+      are compromised.
+
+- In addition, there could be network compromise,
+  but if everything is done right,
+  that would depend on breaking the encryption.
+  - Need to protect against
+    quantum.
+
+---
+
+Usage Ideas (these will evolve as I build this out...)
+
+server: rt -s ip port
+client: rt -c ip port
+
+In both cases,
+ctrl+c should terminate the program
+and all related connections.
