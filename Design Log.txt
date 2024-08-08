@@ -59,8 +59,6 @@ host (server):  > ./rt
                 
                 (goes to background)
 
-                > ./rt
-                > Password: (types password, then presses enter)
                 (joins server they just created)
 
 client:         > ./rt remote_public_ip port
