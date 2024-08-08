@@ -1,4 +1,4 @@
-Project: rt (real-talk)
+Project: Real Talk (rt)
 
 Author: Daniel Gilbert
 
