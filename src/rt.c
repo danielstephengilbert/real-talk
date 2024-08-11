@@ -236,24 +236,32 @@ int get_listener(void) {
 
 }
 
+/**
+ * Get the correct IPv4/6 struct for an address.
+ */
 const void* get_in_addr(
   address* addr
 ) {
 
+  // Declare local typedefs.
   typedef struct sockaddr_in  ipv4_struct;
   typedef struct sockaddr_in6 ipv6_struct;
 
+  // IPv4 vars.
   int                 is_ipv4;
   ipv4_struct*        ipv4;
   struct in_addr*     ipv4_addr;
 
+  // IPv6 vars.
   int                 is_ipv6;
   ipv6_struct*        ipv6;
   struct in6_addr*    ipv6_addr;
 
+  // IP address type check boolean vars.
   is_ipv4 = (addr->sa_family == AF_INET);
   is_ipv6 = (addr->sa_family == AF_INET6);
 
+  // If IPv4 address, get the correct struct format.
   if (is_ipv4) {
 
     ipv4        = (ipv4_struct*) addr;
@@ -261,6 +269,7 @@ const void* get_in_addr(
 
     return ipv4_addr;
 
+  // If IPv6 address, get the correct struct format.
   } else if (is_ipv6) {
 
     ipv6        = (ipv6_struct*) addr;
@@ -268,6 +277,7 @@ const void* get_in_addr(
 
     return ipv6_addr;
 
+  // If neither IPv4 or IPv6, throw error.
   } else {
 
     fprintf(stderr, "Error: Could not obtain address.\n");
@@ -277,6 +287,9 @@ const void* get_in_addr(
 
 }
 
+/**
+ * Add a connection to the server.
+ */
 void add_connection(
   int           conn_fd,
   connection**  conns,
@@ -284,12 +297,13 @@ void add_connection(
   int*          max_conns
 ) {
 
+  // Vars related to space allocation for the connections.
   int need_space;
   int space_multiplier = 2;
   int conns_size;
 
+  // If space is maxed out, reallocate additional space.
   need_space = (*conn_count == *max_conns);
-
   if (need_space) {
 
     *max_conns      *= space_multiplier;
@@ -299,23 +313,27 @@ void add_connection(
 
   }
 
+  // Add the new connection.
   (*conns)[*conn_count].fd      = conn_fd;
   (*conns)[*conn_count].events  = POLLIN;
-
   (*conn_count)++;
 
 }
 
+/**
+ * Remove a connection.
+ */
 void remove_conn(
   int           conn_index,
   connection**  conns,
   int*          conn_count
 ) {
 
+  // Remove the connection at index,
+  // and replace it with the last connection
+  // to make space at the end of the array for new connections.
   int last_conn_index   = *conn_count - 1;
-
   (*conns)[conn_index]  = (*conns)[last_conn_index];
-
   (*conn_count)--;
 
 }
@@ -327,33 +345,40 @@ void process_listener(
   int*          max_conns
 ) {
 
+  // Connection var.
   int                       conn;
+
+  // Client info vars.
+  address*                  client;
   struct sockaddr_storage   client_addr;
-  address*                     client;
+  const char*               client_addr_str;
+
+  // Address info vars.
   socklen_t                 addr_len = sizeof(client_addr);
-  int                       accept_error;
   int                       addr_family;
   const void*               addr_struct;
-  const char*               client_addr_str;
   int                       max_addr_len = INET6_ADDRSTRLEN;
   char                      addr_buffer[max_addr_len];
 
+  // Accept error var.
+  int                       accept_error;
+
+  // Get client address and try to accept connection.
   client  = (address *) &client_addr;
   conn    = accept(listener_fd, client, &addr_len);
 
+  // Throw error if cannot accept connection.
   accept_error = (conn == -1);
-
   if (accept_error) {
-
     perror("accept");
-
+  // Add the connection if successfully connected.
   } else {
     
     add_connection(conn, conns, conn_count, max_conns);
     
     addr_family     = client_addr.ss_family;
     addr_struct     = get_in_addr((address *) &client_addr);
-
+    
     client_addr_str = inet_ntop(
       addr_family, addr_struct, addr_buffer, max_addr_len
     );
