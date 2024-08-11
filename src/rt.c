@@ -15,7 +15,7 @@ int get_listener(
 );
 
 const void* get_in_addr(
-  address*      addr
+  address* addr
 );
 
 void add_connection(
@@ -51,27 +51,27 @@ void process_client(
 int main(void) {
 
   // Connection data structures.
-  connection*  conns;
-  connection*  conn;
+  connection* conns;
+  connection* conn;
 
   // Connection-related data.
-  int   conn_index;
-  int   conn_count;
-  int   max_conns;
-  int   conns_size;
+  int conn_index;
+  int conn_count;
+  int max_conns;
+  int conns_size;
 
   // Listener variables.
-  int   listener_fd;
-  int   listener_error;
+  int listener_fd;
+  int listener_error;
 
   // Poll variables.
-  int   poll_val;
-  int   poll_error;
+  int poll_val;
+  int poll_error;
 
   // Data ready flag info.
-  int   data_ready;
-  int   listener_data;
-  int   client_data;
+  int data_ready;
+  int listener_data;
+  int client_data;
 
   // Allocate memory for connections.
   max_conns   = 5;
@@ -89,9 +89,9 @@ int main(void) {
   }
 
   // Make the listener the first connection on the server.
-  conns[0].fd       = listener_fd;
-  conns[0].events   = POLLIN;
-  conn_count        = 1;
+  conns[0].fd      = listener_fd;
+  conns[0].events  = POLLIN;
+  conn_count       = 1;
 
   // Infinite loop to keep server running until terminated.
   while (1) {
@@ -140,33 +140,33 @@ int main(void) {
 int get_listener(void) {
 
   // Port information.
-  char*         port = "55555";
+  char* port = "55555";
 
   // IP address and connection-related info used to
   // obtain a socket for communicating that way.
-  addr_info     addr_spec;
+  addr_info addr_spec;
 
   // Variables related to the getaddrinfo function.
-  int           getaddrinfo_val;
-  int           getaddrinfo_error;
+  int getaddrinfo_val;
+  int getaddrinfo_error;
 
   // IP addresses to iterate over until a valid one is found.
-  addr_info*    first_addr;
-  addr_info*    addr_iter;
+  addr_info* first_addr;
+  addr_info* addr_iter;
 
   // Listener-related variables.
-  int           listener_fd;
-  int           listener_invalid;
-  int           listener_proto_level = 1;
+  int listener_fd;
+  int listener_invalid;
+  int listener_proto_level = 1;
 
   // Bind function related variables.
-  int           bind_val;
-  int           bind_error;
-  int           bind_failed;
+  int bind_val;
+  int bind_error;
+  int bind_failed;
 
   // Listen function related variables.
-  int           listen_val;
-  int           listen_error;
+  int listen_val;
+  int listen_error;
 
   // Zero out the address specification memory.
   memset(&addr_spec, 0, sizeof(addr_spec));
@@ -349,19 +349,19 @@ void process_listener(
   int                       conn;
 
   // Client info vars.
-  address*                  client;
-  struct sockaddr_storage   client_addr;
-  const char*               client_addr_str;
+  address*                 client;
+  struct sockaddr_storage  client_addr;
+  const char*              client_addr_str;
 
   // Address info vars.
-  socklen_t                 addr_len = sizeof(client_addr);
-  int                       addr_family;
-  const void*               addr_struct;
-  int                       max_addr_len = INET6_ADDRSTRLEN;
-  char                      addr_buffer[max_addr_len];
+  socklen_t    addr_len = sizeof(client_addr);
+  int          addr_family;
+  const void*  addr_struct;
+  int          max_addr_len = INET6_ADDRSTRLEN;
+  char         addr_buffer[max_addr_len];
 
   // Accept error var.
-  int                       accept_error;
+  int accept_error;
 
   // Get client address and try to accept connection.
   client  = (address *) &client_addr;
@@ -376,8 +376,8 @@ void process_listener(
     
     add_connection(conn, conns, conn_count, max_conns);
     
-    addr_family     = client_addr.ss_family;
-    addr_struct     = get_in_addr((address *) &client_addr);
+    addr_family = client_addr.ss_family;
+    addr_struct = get_in_addr((address *) &client_addr);
 
     client_addr_str = inet_ntop(
       addr_family, addr_struct, addr_buffer, max_addr_len
@@ -402,26 +402,26 @@ void process_client(
 ) {
 
   // Sender vars.
-  connection    sender_conn;
-  int           sender_fd;
+  connection  sender_conn;
+  int         sender_fd;
 
   // Buffer vars.
-  int           buf_len = 256;
-  char          buffer[buf_len];
+  int   buf_len = 256;
+  char  buffer[buf_len];
 
   // Data information.
-  int           data_len;
-  int           recv_error;
-  int           disconnected;
+  int data_len;
+  int recv_error;
+  int disconnected;
 
   // Connection info.
-  int           client_fd;
-  int           not_listener;
-  int           not_sender;
+  int client_fd;
+  int not_listener;
+  int not_sender;
 
   // Send status.
-  int           send_val;
-  int           send_error;
+  int send_val;
+  int send_error;
 
   // Get the sender connection.
   sender_conn = (*conns)[conn_index];
