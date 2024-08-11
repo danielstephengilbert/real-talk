@@ -6,9 +6,9 @@
 #include <string.h>
 #include <unistd.h>
 
-typedef struct addrinfo   addr_info;
-typedef struct pollfd     connection;
-typedef struct sockaddr   address;
+typedef struct addrinfo  addr_info;
+typedef struct pollfd    connection;
+typedef struct sockaddr  address;
 
 int get_listener(
   void
