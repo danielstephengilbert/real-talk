@@ -7,72 +7,72 @@
 #include <unistd.h>
 
 typedef struct addrinfo   addr_info;
-typedef struct pollfd     conn;
-typedef struct sockaddr   addr;
+typedef struct pollfd     connection;
+typedef struct sockaddr   address;
 
 int get_listener(
   void
 );
 
 const void* get_in_addr(
-  addr* addr
+  address*      addr
 );
 
 void add_connection(
-  int     conn_fd,
-  conn**  conns,
-  int*    conn_count,
-  int*    max_conns
+  int           conn_fd,
+  connection**  conns,
+  int*          conn_count,
+  int*          max_conns
 );
 
 void remove_conn(
-  int     conn_index,
-  conn**  conns,
-  int*    conn_count
+  int           conn_index,
+  connection**  conns,
+  int*          conn_count
 );
 
 void process_listener(
-  int     listener_fd,
-  conn**  conns,
-  int*    conn_count,
-  int*    max_conns
+  int           listener_fd,
+  connection**  conns,
+  int*          conn_count,
+  int*          max_conns
 );
 
 void process_client(
-  int     conn_index,
-  conn**  conns,
-  int*    conn_count,
-  int     listener_fd
+  int           conn_index,
+  connection**  conns,
+  int*          conn_count,
+  int           listener_fd
 );
 
 int main(void) {
 
   // Connection data structures.
-  conn*   conns;
-  conn*   conn;
+  connection*  conns;
+  connection*  conn;
 
   // Connection-related data.
-  int     conn_index;
-  int     conn_count;
-  int     max_conns;
-  int     conns_size;
+  int   conn_index;
+  int   conn_count;
+  int   max_conns;
+  int   conns_size;
 
   // Listener variables.
-  int     listener_fd;
-  int     listener_error;
+  int   listener_fd;
+  int   listener_error;
 
   // Poll variables.
-  int     poll_val;
-  int     poll_error;
+  int   poll_val;
+  int   poll_error;
 
   // Data ready flag info.
-  int     data_ready;
-  int     listener_data;
-  int     client_data;
+  int   data_ready;
+  int   listener_data;
+  int   client_data;
 
   // Allocate memory for connections.
   max_conns   = 5;
-  conns_size  = sizeof(conn) * max_conns;
+  conns_size  = sizeof(connection) * max_conns;
   conns       = malloc(conns_size);
 
   // Get a listener to receive connections on the server.
@@ -108,7 +108,7 @@ int main(void) {
     for (conn_index = 0; conn_index < conn_count; conn_index++) {
 
       // Get the current connection.
-      conn          = &conns[conn_index];
+      conn = &conns[conn_index];
       
       // Check if data ready, and from which type of connection.
       data_ready    = (conn->revents & POLLIN);
@@ -203,7 +203,7 @@ int get_listener(void) {
 }
 
 const void* get_in_addr(
-  addr* addr
+  address* addr
 ) {
 
   typedef struct sockaddr_in  ipv4_struct;
@@ -244,10 +244,10 @@ const void* get_in_addr(
 }
 
 void add_connection(
-  int     conn_fd,
-  conn**  conns,
-  int*    conn_count,
-  int*    max_conns
+  int           conn_fd,
+  connection**  conns,
+  int*          conn_count,
+  int*          max_conns
 ) {
 
   int need_space;
@@ -259,7 +259,7 @@ void add_connection(
   if (need_space) {
 
     *max_conns      *= space_multiplier;
-    conns_size       = sizeof(conn) * (*max_conns);
+    conns_size       = sizeof(connection) * (*max_conns);
 
     *conns = realloc(*conns, conns_size);
 
@@ -273,9 +273,9 @@ void add_connection(
 }
 
 void remove_conn(
-  int     conn_index,
-  conn**  conns,
-  int*    conn_count
+  int           conn_index,
+  connection**  conns,
+  int*          conn_count
 ) {
 
   int last_conn_index   = *conn_count - 1;
@@ -287,15 +287,15 @@ void remove_conn(
 }
 
 void process_listener(
-  int     listener_fd,
-  conn**  conns,
-  int*    conn_count,
-  int*    max_conns
+  int           listener_fd,
+  connection**  conns,
+  int*          conn_count,
+  int*          max_conns
 ) {
 
   int                       conn;
   struct sockaddr_storage   client_addr;
-  addr*                     client;
+  address*                     client;
   socklen_t                 addr_len = sizeof(client_addr);
   int                       accept_error;
   int                       addr_family;
@@ -304,7 +304,7 @@ void process_listener(
   int                       max_addr_len = INET6_ADDRSTRLEN;
   char                      addr_buffer[max_addr_len];
 
-  client  = (addr *) &client_addr;
+  client  = (address *) &client_addr;
   conn    = accept(listener_fd, client, &addr_len);
 
   accept_error = (conn == -1);
@@ -318,7 +318,7 @@ void process_listener(
     add_connection(conn, conns, conn_count, max_conns);
     
     addr_family     = client_addr.ss_family;
-    addr_struct     = get_in_addr((addr *) &client_addr);
+    addr_struct     = get_in_addr((address *) &client_addr);
 
     client_addr_str = inet_ntop(
       addr_family, addr_struct, addr_buffer, max_addr_len
@@ -333,24 +333,24 @@ void process_listener(
 }
 
 void process_client(
-  int     conn_index,
-  conn**  conns,
-  int*    conn_count,
-  int     listener_fd
+  int           conn_index,
+  connection**  conns,
+  int*          conn_count,
+  int           listener_fd
 ) {
 
-  conn      sender_conn;
-  int       sender_fd;
-  int       buf_len = 256;
-  char      buffer[buf_len];
-  int       data_len;
-  int       recv_error;
-  int       disconnected;
-  int       client_fd;
-  int       not_listener;
-  int       not_sender;
-  int       send_val;
-  int       send_error;
+  connection    sender_conn;
+  int           sender_fd;
+  int           buf_len = 256;
+  char          buffer[buf_len];
+  int           data_len;
+  int           recv_error;
+  int           disconnected;
+  int           client_fd;
+  int           not_listener;
+  int           not_sender;
+  int           send_val;
+  int           send_error;
 
   sender_conn = (*conns)[conn_index];
   sender_fd   = sender_conn.fd;
