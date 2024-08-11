@@ -21,12 +21,9 @@ void add_connection(
   // If space is maxed out, reallocate additional space.
   need_space = (*conn_count == *max_conns);
   if (need_space) {
-
     *max_conns      *= space_multiplier;
     conns_size       = sizeof(connection) * (*max_conns);
-
     *conns = realloc(*conns, conns_size);
-
   }
 
   // Add the new connection.
