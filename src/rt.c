@@ -19,19 +19,30 @@ const void* get_in_addr(
 );
 
 void add_connection(
-  conn** conns, int conn_fd, int* conn_count, int* max_conns
+  int     conn_fd,
+  conn**  conns,
+  int*    conn_count,
+  int*    max_conns
 );
 
 void remove_conn(
-  conn** conns, int conn_index, int* conn_count
+  int     conn_index,
+  conn**  conns,
+  int*    conn_count
 );
 
 void process_listener(
-  int listener_fd, conn** conns, int* conn_count, int* max_conns
+  int     listener_fd,
+  conn**  conns,
+  int*    conn_count,
+  int*    max_conns
 );
 
 void process_client(
-  int conn_index, int listener_fd, conn** conns, int* conn_count
+  int     conn_index,
+  int     listener_fd,
+  conn**  conns,
+  int*    conn_count
 );
 
 int main(void) {
@@ -216,7 +227,10 @@ const void* get_in_addr(
 }
 
 void add_connection(
-  conn** conns, int conn_fd, int* conn_count, int* max_conns
+  int     conn_fd,
+  conn**  conns,
+  int*    conn_count,
+  int*    max_conns
 ) {
 
   int need_space;
@@ -242,7 +256,9 @@ void add_connection(
 }
 
 void remove_conn(
-  conn** conns, int conn_index, int* conn_count
+  int     conn_index,
+  conn**  conns,
+  int*    conn_count
 ) {
 
   int last_conn_index   = *conn_count - 1;
@@ -254,7 +270,10 @@ void remove_conn(
 }
 
 void process_listener(
-  int listener_fd, conn** conns, int* conn_count, int* max_conns
+  int     listener_fd,
+  conn**  conns,
+  int*    conn_count,
+  int*    max_conns
 ) {
 
   int                       conn;
@@ -279,7 +298,7 @@ void process_listener(
 
   } else {
     
-    add_connection(conns, conn, conn_count, max_conns);
+    add_connection(conn, conns, conn_count, max_conns);
     
     addr_family     = client_addr.ss_family;
     addr_struct     = get_in_addr((addr *) &client_addr);
@@ -297,7 +316,10 @@ void process_listener(
 }
 
 void process_client(
-  int conn_index, int listener_fd, conn** conns, int* conn_count
+  int     conn_index,
+  int     listener_fd,
+  conn**  conns,
+  int*    conn_count
 ) {
 
   conn      sender_conn;
@@ -330,7 +352,7 @@ void process_client(
 
     close(sender_fd);
     
-    remove_conn(conns, conn_index, conn_count);
+    remove_conn(conn_index, conns, conn_count);
 
   } else {
 
