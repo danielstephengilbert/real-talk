@@ -8,10 +8,14 @@
 
 typedef struct pollfd connection;
 
+/* End includes, etc. ========================================================*/
+
 /**
  * Facilitate connections and communication between them.
  */
 int main(void) {
+
+/* Init all local vars -------------------------------------------------------*/
 
   // Connection data structures.
   connection* conns;
@@ -36,6 +40,8 @@ int main(void) {
   int listener_data;
   int client_data;
 
+/* Begin server setup --------------------------------------------------------*/
+
   // Allocate memory for connections.
   max_conns   = 5;
   conns_size  = sizeof(connection) * max_conns;
@@ -55,6 +61,8 @@ int main(void) {
   conns[0].fd      = listener_fd;
   conns[0].events  = POLLIN;
   conn_count       = 1;
+
+/* Listen for and process connections ----------------------------------------*/
 
   // Infinite loop to keep server running until terminated.
   while (1) {
@@ -84,6 +92,7 @@ int main(void) {
       // If data is ready from the listener connection, process it.
       if (data_ready && listener_data) {
         process_listener(listener_fd, &conns, &conn_count, &max_conns);
+
       // If data is ready from a client connection, process it.
       } else if (data_ready && client_data) {
         process_client(conn_index, &conns, &conn_count, listener_fd);
