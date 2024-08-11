@@ -1,19 +1,12 @@
-#include <arpa/inet.h>
-#include <netdb.h>
 #include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 #include "../include/get_listener.h"
 #include "../include/process_client.h"
 #include "../include/process_listener.h"
-#include "../include/remove_connection.h"
 
-typedef struct addrinfo  addr_info;
-typedef struct pollfd    connection;
-typedef struct sockaddr  address;
+typedef struct pollfd connection;
 
 /**
  * Facilitate connections and communication between them.
