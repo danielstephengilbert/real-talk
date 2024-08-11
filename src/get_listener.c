@@ -70,6 +70,7 @@ int get_listener(void) {
       addr_iter->ai_family, addr_iter->ai_socktype, addr_iter->ai_protocol
     );
     listener_invalid = (listener_fd < 0);
+
     // If failure, try with the next available address.
     if (listener_invalid) continue;
 
@@ -81,13 +82,14 @@ int get_listener(void) {
     // Try to bind the socket.
     bind_val    = bind(listener_fd, addr_iter->ai_addr, addr_iter->ai_addrlen);
     bind_error  = (bind_val < 0);
+
     // If failure, try with the next available address.
     if (bind_error) {
       close(listener_fd);
       continue;
     }
 
-    break;
+    break; // Break on success.
 
   }
 
