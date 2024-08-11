@@ -6,15 +6,12 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "../include/get_ipv46_addr.h"
 #include "../include/get_listener.h"
 
 typedef struct addrinfo  addr_info;
 typedef struct pollfd    connection;
 typedef struct sockaddr  address;
-
-const void* get_in_addr(
-  address* addr
-);
 
 void add_connection(
   int           conn_fd,
@@ -133,57 +130,6 @@ int main(void) {
 }
 
 /**
- * Get the correct IPv4/6 struct for an address.
- */
-const void* get_in_addr(
-  address* addr
-) {
-
-  // Declare local typedefs.
-  typedef struct sockaddr_in  ipv4_struct;
-  typedef struct sockaddr_in6 ipv6_struct;
-
-  // IPv4 vars.
-  int                 is_ipv4;
-  ipv4_struct*        ipv4;
-  struct in_addr*     ipv4_addr;
-
-  // IPv6 vars.
-  int                 is_ipv6;
-  ipv6_struct*        ipv6;
-  struct in6_addr*    ipv6_addr;
-
-  // IP address type check boolean vars.
-  is_ipv4 = (addr->sa_family == AF_INET);
-  is_ipv6 = (addr->sa_family == AF_INET6);
-
-  // If IPv4 address, get the correct struct format.
-  if (is_ipv4) {
-
-    ipv4        = (ipv4_struct*) addr;
-    ipv4_addr   = &(ipv4->sin_addr);
-
-    return ipv4_addr;
-
-  // If IPv6 address, get the correct struct format.
-  } else if (is_ipv6) {
-
-    ipv6        = (ipv6_struct*) addr;
-    ipv6_addr   = &(ipv6->sin6_addr);
-
-    return ipv6_addr;
-
-  // If neither IPv4 or IPv6, throw error.
-  } else {
-
-    fprintf(stderr, "Error: Could not obtain address.\n");
-    exit(1);
-
-  }
-
-}
-
-/**
  * Add a connection to the server.
  */
 void add_connection(
@@ -273,7 +219,7 @@ void process_listener(
     add_connection(conn, conns, conn_count, max_conns);
     
     addr_family = client_addr.ss_family;
-    addr_struct = get_in_addr((address *) &client_addr);
+    addr_struct = get_ipv46_addr((address *) &client_addr);
 
     client_addr_str = inet_ntop(
       addr_family, addr_struct, addr_buffer, max_addr_len
