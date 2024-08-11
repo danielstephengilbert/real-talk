@@ -9,16 +9,11 @@
 #include "../include/add_connection.h"
 #include "../include/get_ipv46_addr.h"
 #include "../include/get_listener.h"
+#include "../include/remove_connection.h"
 
 typedef struct addrinfo  addr_info;
 typedef struct pollfd    connection;
 typedef struct sockaddr  address;
-
-void remove_conn(
-  int           conn_index,
-  connection**  conns,
-  int*          conn_count
-);
 
 void process_listener(
   int           listener_fd,
@@ -120,24 +115,6 @@ int main(void) {
   }
 
   return 0;
-
-}
-
-/**
- * Remove a connection.
- */
-void remove_conn(
-  int           conn_index,
-  connection**  conns,
-  int*          conn_count
-) {
-
-  // Remove the connection at index,
-  // and replace it with the last connection
-  // to make space at the end of the array for new connections.
-  int last_conn_index   = *conn_count - 1;
-  (*conns)[conn_index]  = (*conns)[last_conn_index];
-  (*conn_count)--;
 
 }
 
@@ -246,7 +223,7 @@ void process_client(
 
     close(sender_fd);
     
-    remove_conn(conn_index, conns, conn_count);
+    remove_connection(conn_index, conns, conn_count);
 
   } else {
 
