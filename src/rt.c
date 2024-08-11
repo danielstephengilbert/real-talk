@@ -40,9 +40,9 @@ void process_listener(
 
 void process_client(
   int     conn_index,
-  int     listener_fd,
   conn**  conns,
-  int*    conn_count
+  int*    conn_count,
+  int     listener_fd
 );
 
 int main(void) {
@@ -102,7 +102,7 @@ int main(void) {
 
       } else if (data_ready && client_data) {
 
-        process_client(conn_index, listener_fd, &conns, &conn_count);
+        process_client(conn_index, &conns, &conn_count, listener_fd);
 
       }
 
@@ -317,9 +317,9 @@ void process_listener(
 
 void process_client(
   int     conn_index,
-  int     listener_fd,
   conn**  conns,
-  int*    conn_count
+  int*    conn_count,
+  int     listener_fd
 ) {
 
   conn      sender_conn;
