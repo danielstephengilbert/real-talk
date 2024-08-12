@@ -14,7 +14,7 @@ void run_server(
   int           listener_fd
 ) {
 
-  // Connection data structures.
+  // Connection data structure.
   connection conn;
 
   // Connection-related data.
