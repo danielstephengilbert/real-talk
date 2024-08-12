@@ -37,7 +37,7 @@ void run_server(
     poll_val    = poll(*conns, *conn_count, -1);
     poll_error  = (poll_val == -1);
 
-    // Throw error if could not retrive connection information.
+    // Throw error if could not retrieve connection information.
     if (poll_error) {
       perror("poll");
       exit(1);
