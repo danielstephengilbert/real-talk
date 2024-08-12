@@ -39,7 +39,7 @@ int main(void) {
   listener_fd     = get_listener();
   listener_error  = (listener_fd == -1);
 
-  // Throw error if cannot get listener.
+  // Throw error if could not get listener.
   if (listener_error) {
     fprintf(stderr, "Error: Could not start listener.\n");
     exit(1);
