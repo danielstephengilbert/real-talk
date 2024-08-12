@@ -20,14 +20,14 @@ void process_listener(
 ) {
 
   // Connection var.
-  int                       conn;
+  int conn;
 
-  // Client info vars.
+  // Client vars.
   address*                 client;
   struct sockaddr_storage  client_addr;
   const char*              client_addr_str;
 
-  // Address info vars.
+  // Address vars.
   socklen_t    addr_len = sizeof(client_addr);
   int          addr_family;
   const void*  addr_struct;
@@ -45,22 +45,24 @@ void process_listener(
   accept_error = (conn == -1);
   if (accept_error) {
     perror("accept");
-  // Add the connection if successfully connected.
-  } else {
-    
-    add_connection(conn, conns, conn_count, max_conns);
-    
-    addr_family = client_addr.ss_family;
-    addr_struct = get_ipv46_addr((address *) &client_addr);
-
-    client_addr_str = inet_ntop(
-      addr_family, addr_struct, addr_buffer, max_addr_len
-    );
-    
-    printf(
-      "Connection established from %s on socket %d.\n", client_addr_str, conn
-    );
-    
+    return;
   }
 
+  // Add the connection if successfully connected.
+  add_connection(conn, conns, conn_count, max_conns);
+  
+  // Get address info in struct.
+  addr_family     = client_addr.ss_family;
+  addr_struct     = get_ipv46_addr((address *) &client_addr);
+
+  // Get address info in string for status message.
+  client_addr_str = inet_ntop(
+    addr_family, addr_struct, addr_buffer, max_addr_len
+  );
+  
+  // Print connection established message to server console.
+  printf(
+    "Connection established from %s on socket %d.\n", client_addr_str, conn
+  );
+  
 }
