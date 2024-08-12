@@ -1,6 +1,7 @@
 #include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "../include/get_listener.h"
 #include "../include/run_server.h"
@@ -24,8 +25,10 @@ int main(void) {
   int listener_fd;
   int listener_error;
 
-  // Multi-process stuff.
+  // Fork process vars.
   int server_pid;
+  int is_parent_process;
+  int is_child_process;
 
   // Allocate memory for connections.
   max_conns   = 5;
@@ -47,9 +50,22 @@ int main(void) {
   conns[0].events  = POLLIN;
   conn_count       = 1;
 
-  // server_pid = fork();
-  // Add conditional logic for server/client code.
-  run_server(&conns, &conn_count, &max_conns, listener_fd);
+  // Fork process to handle server and client simultaneously.
+  server_pid = fork();
+  is_parent_process = (server_pid != 0);
+  is_child_process  = !is_parent_process;
+
+  // Run server using parent process.
+  if (is_parent_process) {
+
+    run_server(&conns, &conn_count, &max_conns, listener_fd);
+  
+  // Open host client in child process.
+  } else {
+
+    while (1) {  }
+
+  }
 
   return 0;
 
