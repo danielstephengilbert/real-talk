@@ -26,17 +26,17 @@ int get_listener(void) {
   addr_info* first_addr;
   addr_info* addr_iter;
 
-  // Listener-related variables.
+  // Listener variables.
   int listener_fd;
   int listener_invalid;
   int listener_proto_level = 1;
 
-  // Bind function related variables.
+  // Bind variables.
   int bind_val;
   int bind_error;
   int bind_failed;
 
-  // Listen function related variables.
+  // Listen variables.
   int listen_val;
   int listen_error;
 

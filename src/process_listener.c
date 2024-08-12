@@ -52,8 +52,8 @@ void process_listener(
   add_connection(conn, conns, conn_count, max_conns);
   
   // Get address info in struct.
-  addr_family     = client_addr.ss_family;
-  addr_struct     = get_ipv46_addr((address *) &client_addr);
+  addr_family = client_addr.ss_family;
+  addr_struct = get_ipv46_addr((address *) &client_addr);
 
   // Get address info in string for status message.
   client_addr_str = inet_ntop(
