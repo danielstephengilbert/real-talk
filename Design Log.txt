@@ -1,4 +1,18 @@
 
+2024-08-11
+
+Spent some time cleaning up the code.
+Server now works for basic chatting with multiple clients, per Beej's example.
+
+Want to make it so that host can start server as a non-technical user and
+just enter a chat to start chatting with other users, versus have to run a
+separate window for the server.
+
+Will log connection notices to all clients.
+Also want to log these to a file for the server and clients.
+
+===
+
 2024-08-03
 
 How would this software be used in practice?
