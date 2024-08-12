@@ -10,4 +10,5 @@ gcc \
   ./src/process_client.c \
   ./src/process_listener.c \
   ./src/remove_connection.c \
+  ./src/run_server.c \
   -o rt

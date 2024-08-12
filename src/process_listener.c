@@ -19,8 +19,8 @@ void process_listener(
   int*          max_conns
 ) {
 
-  // Connection var.
-  int conn;
+  // Connection file descriptor.
+  int conn_fd;
 
   // Client vars.
   address*                 client;
@@ -39,18 +39,18 @@ void process_listener(
 
   // Get client address and try to accept connection.
   client  = (address *) &client_addr;
-  conn    = accept(listener_fd, client, &addr_len);
+  conn_fd = accept(listener_fd, client, &addr_len);
 
   // Throw error if cannot accept connection.
-  accept_error = (conn == -1);
+  accept_error = (conn_fd == -1);
   if (accept_error) {
     perror("accept");
     return;
   }
 
   // Add the connection if successfully connected.
-  add_connection(conn, conns, conn_count, max_conns);
-  
+  add_connection(conn_fd, conns, conn_count, max_conns);
+
   // Get address info in struct.
   addr_family = client_addr.ss_family;
   addr_struct = get_ipv46_addr((address *) &client_addr);
@@ -62,7 +62,7 @@ void process_listener(
   
   // Print connection established message to server console.
   printf(
-    "Connection established from %s on socket %d.\n", client_addr_str, conn
+    "Connection established from %s on socket %d.\n", client_addr_str, conn_fd
   );
   
 }
